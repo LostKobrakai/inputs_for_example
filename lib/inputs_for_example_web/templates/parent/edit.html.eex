@@ -1,0 +1,22 @@
+<%= form_for @changeset, Routes.parent_path(@conn, :update, @parent), [method: :put, as: "parent"], fn f ->  %>
+	<p>
+		Uncheck all Children for to cause the "required: true" to error.
+	</p>
+	
+	<%= inputs_for f, :intermediate_children, [append: @unassigned], fn finner -> %>
+		<div>
+			<%= checkbox finner, :active %>
+			<%= finner.data.child.name %>
+			<%= hidden_input finner, :child_id %>
+			<%= hidden_input finner, :parent_id %>
+		</div>
+	<% end %>
+	<%= error_tag f, :intermediate_children  %>
+
+	<hr>
+	<%= checkbox f, :error, checked: true %> Uncheck to cause different error
+
+	<div>
+		<%= submit "Submit" %>
+	</div>
+<% end %>
